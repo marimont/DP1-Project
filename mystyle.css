@@ -13,6 +13,7 @@ html, body{
     padding:5px;
 }
 #nav {
+	line-height: 30px;
 	position: absolute;
 	down: 0px;
     background-color:#eeeeee;
@@ -39,8 +40,8 @@ html, body{
 	}
 	
 	
-	#reservations_table tr:nth-child(even) {background: #CCC}
-	#reservations_table tr:nth-child(odd) {background: #FFF}
+	.reservations_table tr:nth-child(even) {background: #CCC}
+	.reservations_table tr:nth-child(odd) {background: #FFF}
 
 
 </style> 

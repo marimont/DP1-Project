@@ -51,7 +51,7 @@ function loadDB(){
 				WHERE R.IDU = U.ID AND R.IDM = M.ID
 				ORDER BY R.IDU, R.StartTime";
 		if($res = mysqli_query($link, $query)){
-			echo "<table id=\"reservations_table\">";
+			echo "<table class=\"reservations_table\">";
 			echo "<th>User</th><th>Machine</th><th>StartTime</th><th>Duration(min)</th>";
 			while ($row = mysqli_fetch_array($res)){
 				$name = $row[0];
@@ -72,6 +72,35 @@ function loadDB(){
 		mysqli_close($link);
 	} else die("<h1>Can't connect to DB</h1>");
 }
+
+	function loadUserReservations($username){
+		mysqli_report(MYSQLI_REPORT_ERROR);
+		if($link = mysqli_connect('localhost', 'root', '', 'assignment')){
+			$query = "SELECT M.Name, R.StartTime, R.EndTime
+				FROM reservations AS R, users AS U, machines AS M
+				WHERE R.IDU = U.ID AND R.IDM = M.ID AND U.Email = '$username'
+				ORDER BY R.StartTime";
+			if($res = mysqli_query($link, $query)){
+				echo "<table class=\"reservations_table\">";
+				echo "<th>Machine</th><th>StartTime</th><th>Duration(min)</th>";
+				while ($row = mysqli_fetch_array($res)){
+					$machine = $row[0];
+					$duration = $row[2] - $row[1];
+					$startTimeH = intval($row[1]/60);
+					$startTimeHstr = sprintf("%02d", $startTimeH);
+					$startTimeM = $row[1]%60;
+					$startTimeMstr = sprintf("%02d", $startTimeM);
+					echo "<tr>";
+					echo "<td>$machine</td><td>$startTimeHstr:$startTimeMstr</td><td>$duration</td>";
+					echo "</tr>";
+				}
+				echo "</table>";
+						mysqli_free_result($res);
+			} else die("<h1>Can't execute query</h1>");
+			mysqli_close($link);
+		} else die("<h1>Can't connect to DB</h1>");
+	}
+
+
 ?>
-</body>
-</html>
+

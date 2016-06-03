@@ -17,6 +17,7 @@
 <div id="nav">
 	<ul>
 	<li><a href="index.php">Homepage</a></li>
+	<li><a href="reservations.php">Manage Reservations</a></li>
 	<li><a href="registration.php">Registration</a></li>
 	</ul>
 </div>

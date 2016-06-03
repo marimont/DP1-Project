@@ -67,6 +67,7 @@
 <div id="nav">
 	<ul>
 	<li><a href="index.php">Homepage</a></li>
+	<li><a href="reservations.php">Manage Reservations</a></li>
 	<?php 
 		if($isLogged){
 			echo "<li><a href=\"logout.php\">Logout</a></li>";

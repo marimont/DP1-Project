@@ -22,6 +22,7 @@
 </div>
 <div id="nav">
 	<ul>
+	<li><a href="reservations.php">Manage Reservations</a></li>
 	<li><a href="registration.php">Registration</a></li>
 	<?php 
 		if($isLogged){
