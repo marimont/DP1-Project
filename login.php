@@ -77,7 +77,7 @@
 			</tr>";
 			echo "<tr><th>Password</th><td><input type=\"password\" class=\"input_field\" id=\"password\" name=\"password\" maxlength=\"50\"></td></tr>";
 			echo "</table>";
-			echo "<input type=\"button\" value=\"Login\" onclick=\"checkform()\" >";
+			echo "<input type=\"button\" value=\"Login\" style=\"margin: 5px;\" onclick=\"checkform()\" >";
 			echo "</form>";
 		}
 	?>

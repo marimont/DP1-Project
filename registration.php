@@ -110,7 +110,7 @@
 			<td><input type="password" class="input_field" id="check_password" name="check_password" maxlength="50"></td>
 		</tr>
 	</table>
-	<input type="button" value="Register" onclick="checkform()" >
+	<input type="button" value="Register" style="margin: 5px;" onclick="checkform()" >
 	</form>
 	
 	</div>

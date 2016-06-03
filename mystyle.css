@@ -30,5 +30,17 @@ html, body{
     padding:5px;
 }
 
+	table{
+		border: 1px solid black;
+	}
+	
+	th, td{
+		padding: 5px;
+	}
+	
+	
+	#reservations_table tr:nth-child(even) {background: #CCC}
+	#reservations_table tr:nth-child(odd) {background: #FFF}
+
 
 </style> 
