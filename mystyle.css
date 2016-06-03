@@ -1,0 +1,34 @@
+@CHARSET "ISO-8859-1";
+<style>
+html, body{
+	width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#header {
+    background-color:black;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+#nav {
+	position: absolute;
+	down: 0px;
+    background-color:#eeeeee;
+    height: 100%;
+    width:15%;
+    float:left;
+    padding:5px;
+    z-index: 200;
+}
+#section {
+	position: absolute;
+	down: 0px;
+	height: 100%;
+	width: 100%;
+    padding:5px;
+}
+
+
+</style> 
