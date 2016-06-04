@@ -92,23 +92,23 @@
 	<table>
 		<tr>
 			<th>Name</th>
-			<td><input type="text" class="input_field" id="name" name="name" maxlength="50"></td>
+			<td><input type="text" class="input_field" id="name" name="name" maxlength="50" placeholder="your name" ></td>
 		</tr>
 		<tr>
 			<th>Surname</th>
-			<td><input type="text" class="input_field" id="surname" name="surname" maxlength="50"></td>
+			<td><input type="text" class="input_field" id="surname" name="surname" maxlength="50" placeholder="your surname" ></td>
 		</tr>
 		<tr>
 			<th>Email Address</th>
-			<td><input type="text" class="input_field" id="email" name="email" maxlength="50"></td>
+			<td><input type="text" class="input_field" id="email" name="email" maxlength="50" placeholder="sample@domain.com"></td>
 		</tr>
 		<tr>
 			<th>Password</th>
-			<td><input type="password" class="input_field" id="password" name="password" maxlength="50"></td>
+			<td><input type="password" class="input_field" id="password" name="password" maxlength="50" placeholder="password" ></td>
 		</tr>
 		<tr>
 			<th>Repeat Password</th>
-			<td><input type="password" class="input_field" id="check_password" name="check_password" maxlength="50"></td>
+			<td><input type="password" class="input_field" id="check_password" name="check_password" maxlength="50" placeholder="repeat password" ></td>
 		</tr>
 	</table>
 	<input type="button" value="Register" style="margin: 5px;" onclick="checkform()" >

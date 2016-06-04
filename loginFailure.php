@@ -10,7 +10,7 @@
 <link href="mystyle.css" rel=stylesheet type="text/css">
 <title>Login</title>
 </head>
-<body onload="my_form.reset()">
+<body>
 <div id="header">
 	<h1>Login</h1>
 </div>

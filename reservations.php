@@ -2,6 +2,7 @@
 	session_start();
 	include 'stat.php';
 	cookiesEnabled();
+	checkHTTPS();
 	if(isLogged()){
 		$_SESSION["login_time"] = time();
 		$_SESSION["page"] = $_SERVER["REQUEST_URI"];
@@ -20,14 +21,19 @@
 <script type="text/javascript" src="jquery-1.12.4.js"></script>
 <script type="text/javascript"> 
 $(document).ready(function(){
- $("#add").click(function(){
-    $(".panel").slideDown("slow");
-    $(".buttonsPanel").hide();
-  });
- $("#cancel").click(function(){
+ 	$("#add").click(function(){
+   	 $("#addpanel").slideDown("slow");
+    	$(".buttonsPanel").hide();
+ 	 });
+ 	$("#remove").click(function(){
+	    $("#removepanel").slideDown("slow");
+	    $(".buttonsPanel").hide();
+	 });
+	$(".cancel").click(function(){
 	    $(".panel").slideUp("slow");
 	    $(".buttonsPanel").show();
 	});
+
 });
 </script>
 <script type="text/javascript">
@@ -72,6 +78,40 @@ $(document).ready(function(){
 		
 		document.getElementById("my_form").submit();
 	}
+
+	function checkRemform(){
+		startH = document.getElementById("startH_r").value;
+		startM = document.getElementById("startM_r").value;
+		machine = document.getElementById("machine").value;
+
+		if(startH == "" || startM == "" || machine == ""){
+			alert("Empty fields!"); return;
+		}
+		if(startH < 0 || startH > 23){
+			alert("Start Hour: " + startH + " - Value not allowed!"); return;
+		}
+	
+		if(startM < 0 || startM > 59){
+			alert("Start Minute: " + startM + " - Value not allowed!"); return;
+		}
+	
+		startH = parseInt(startH);
+		startM = parseInt(startM);
+		machine = parseInt(machine);
+
+		startT = startH *60 + startM;
+		var d = new Date();
+		if((d.getTime() - startT*60*1000) < 60){
+			alert("At least 1 minute from the planned start time must be elapsed!"); return;
+		}
+
+		if(isNaN(startH) || isNaN(startM) || isNaN(machine)){
+			alert("Bad input!"); return;
+		}
+	
+		document.getElementById("my_remform").submit();
+	}
+	
 //-->
 </script>
 <style type="text/css">
@@ -82,7 +122,7 @@ $(document).ready(function(){
 	}
 </style>
 </head>
-<body onload="my_form.reset()">
+<body onload="my_form.reset(); my_remform.reset();">
 <div id="header">
 	<h1>Reservations Managment</h1>
 </div>
@@ -109,7 +149,7 @@ $(document).ready(function(){
 		loadUserReservations($_SESSION["username"]);
 	?>
 	</div>
-	<div class="panel">
+	<div class="panel" id ="addpanel">
 	<form id="my_form" action="newRES.php" method="post">
 		<table>
 		<tr>
@@ -124,11 +164,29 @@ $(document).ready(function(){
 		</tr>
 		</table>
 		<input type="button" id="confirm" value="Confirm" style="margin: 5px;" onclick="checkform()" >
-		<input type="button" id="cancel" value="Cancel" style="margin: 5px;">
+		<input type="button" class="cancel" value="Cancel" style="margin: 5px;">
+	</form>
+	</div>
+	<div class="panel" id ="removepanel">
+	<form id="my_remform" action="delRES.php" method="post">
+		<table>
+		<tr>
+			<td>Machine</td>
+			<td><input type="text" id="machine" name ="machine" style= "text-align: right" placeholder="machine ID"></td>
+		</tr>
+		<tr>
+			<td>Starting Time</td>
+			<td><input type="text" id="startH_r" name ="startH" style= "text-align: right" placeholder="HH" maxlength="2"> : </td>
+			<td><input type="text" id="startM_r" name ="startM" style= "text-align: right" placeholder="MM" maxlength="2"></td>
+		</tr>
+		</table>
+		<input type="button" id="confirm" value="Confirm" style="margin: 5px;" onclick="checkRemform()" >
+		<input type="button" class="cancel" value="Cancel" style="margin: 5px;">
 	</form>
 	</div>
 	<div class="buttonsPanel">
 		<input type="button" id="add" value="Add Reservation" style="margin: 5px;">
+		<input type="button" id="remove" value="Remove Reservation" style="margin: 5px;">
 	</div>
 	</div>
 	<div style="display: table; margin: 0 auto;">

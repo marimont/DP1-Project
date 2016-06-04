@@ -74,9 +74,9 @@
 			echo "<table>";
 			echo "<tr>
 			<th>Username</th>
-			<td><input type=\"text\" class=\"input_field\" id=\"username\" name=\"username\" maxlength=\"50\"></td>
+			<td><input type=\"text\" class=\"input_field\" id=\"username\" name=\"username\" maxlength=\"50\" placeholder=\"sample@domain.com\"></td>
 			</tr>";
-			echo "<tr><th>Password</th><td><input type=\"password\" class=\"input_field\" id=\"password\" name=\"password\" maxlength=\"50\"></td></tr>";
+			echo "<tr><th>Password</th><td><input type=\"password\" class=\"input_field\" id=\"password\" name=\"password\" maxlength=\"50\" placeholder=\"your password\"></td></tr>";
 			echo "</table>";
 			echo "<input type=\"button\" value=\"Login\" style=\"margin: 5px;\" onclick=\"checkform()\" >";
 			echo "</form>";
