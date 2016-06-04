@@ -25,9 +25,10 @@
 			header("Location:loginFailure.php");
 		}
 		mysqli_free_result($res);
+		mysqli_close($link);
 	}else{
 		$_SESSION["loginFailure"] = "Can't connect to the database";
 		header("Location:loginFailure.php");
 	}
-	mysqli_close($link);
+	
 ?>

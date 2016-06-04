@@ -53,15 +53,24 @@ $(document).ready(function(){
 		if(endM < 0 || endM > 59){
 			alert("End Minute: " + endM + " - Value not allowed!"); return;
 		}
+		startH = parseInt(startH);
+		startM = parseInt(startM);
+		endH = parseInt(endH);
+		endM = parseInt(endM);
 
-		startT = parseInt(startH)*60 + parseInt(startM);
-		endT = parseInt(endH)*60 + parseInt(endM);
+		if(isNaN(startH) || isNaN(startM)
+				|| isNaN(endH) || isNaN(endM)){
+			alert("Bad input!"); return;
+		}
+		
+		startT = startH *60 + startM;
+		endT = endH*60 + endM;
 
 		if((endT - startT) <= 0){
 			alert("Wrong input: ending time must follow starting time!"); return;
 		}
 		
-		document.getElementBy("my_form").submit();
+		document.getElementById("my_form").submit();
 	}
 //-->
 </script>
@@ -101,7 +110,7 @@ $(document).ready(function(){
 	?>
 	</div>
 	<div class="panel">
-	<form id="my_form" action="newREG.php" method="post">
+	<form id="my_form" action="newRES.php" method="post">
 		<table>
 		<tr>
 			<td>Starting Time</td>

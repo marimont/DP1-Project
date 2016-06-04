@@ -17,8 +17,7 @@ function checkDB($link){
 				for($id = $row[0] + 1; $id <= $N; $id++ ){
 					$query = "INSERT INTO machines(Name) VALUES('Printer".$id."')";
 					$res = mysqli_query($link, $query);
-					if($res){
-						if(mysqli_affected_rows($link) != 1)
+					if(!$res || mysqli_affected_rows($link) != 1 ){
 							die("<h1>Database insertion failed: cannot  insert new machine</h1>");	
 						//insert and update don't return msqli_result object, so, no need to perform free
 					}	
@@ -43,7 +42,6 @@ function checkDB($link){
 }
 
 function loadDB(){
-	mysqli_report(MYSQLI_REPORT_ERROR);
 	if($link = mysqli_connect('localhost', 'root', '', 'assignment')){
 		checkDB($link);
 		$query = "SELECT U.Name, U.Surname, M.Name, R.StartTime, R.EndTime 
@@ -74,7 +72,6 @@ function loadDB(){
 }
 
 	function loadUserReservations($username){
-		mysqli_report(MYSQLI_REPORT_ERROR);
 		if($link = mysqli_connect('localhost', 'root', '', 'assignment')){
 			$query = "SELECT M.Name, R.StartTime, R.EndTime
 				FROM reservations AS R, users AS U, machines AS M

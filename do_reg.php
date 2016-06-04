@@ -35,7 +35,7 @@
 		mysqli_free_result($res);
 		$query = "INSERT INTO users(Name, Surname, Email, Password) VALUES('$name', '$surname', '$email', '$pwd')";
 		$res = mysqli_query($link, $query);
-		if(mysqli_affected_rows($link) == 1){
+		if($res && mysqli_affected_rows($link) == 1){
 			$_SESSION["email"] = $email;
 			header("Location:regOk.php");
 			exit();
@@ -45,10 +45,11 @@
 			exit();
 		}
 		mysqli_free_result($res);
+		mysqli_close($link);
 	}else{
 		$_SESSION["regFailure"] = "Can't connect to the database";
 		header("Location:regFailure.php");
 		exit();
 	}
-	mysqli_close($link);
+	
 ?>
