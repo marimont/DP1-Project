@@ -2,33 +2,33 @@
 	session_start();
 	if(isset($_REQUEST["username"]) && isset($_REQUEST["password"])){
 		$username = htmlentities($_REQUEST["username"]);
-		$pwd = htmlentities($_REQUEST["password"]);
+		$pwd = $_REQUEST["password"];
+		/*I'm not sanitizing pwds in order to avoid weakening them
+		 * Thet're gonna be processed by a hash function, so they won't be offensive
+		 * */
 	} else die("<h1>Access forbidden</h1>");
 	
 	mysqli_report(MYSQLI_REPORT_ERROR);
-	if($link = mysqli_connect('localhost', 'root', '', 'assignment')){
-		$username = mysqli_real_escape_string($link, $username);
-		$query = "SELECT Password FROM users WHERE Email = '$username'";
-		$res = mysqli_query($link, $query);
-		if(mysqli_num_rows($res) > 0 ){
-			$row = mysqli_fetch_array($res);
-			if($row[0] == md5($pwd)){
-				$_SESSION["username"] = $username;
-				$_SESSION["login_time"] = time();
-				header("Location:loggedIn.php");
-			} else {
-				$_SESSION["loginFailure"] = "Wrong username or password";
-				header("Location:loginFailure.php");
-			}
-		} else{ 
-			$_SESSION["loginFailure"] = "Username not found in the database";
-			header("Location:loginFailure.php");
-		}
-		mysqli_free_result($res);
-		mysqli_close($link);
-	}else{
-		$_SESSION["loginFailure"] = "Can't connect to the database";
-		header("Location:loginFailure.php");
+	try{
+		if($link = mysqli_connect('localhost', 'root', '', 'assignment')){
+			$username = mysqli_real_escape_string($link, $username);
+			$query = "SELECT Password FROM users WHERE Email = '$username'";
+			$res = mysqli_query($link, $query);
+			if(mysqli_num_rows($res) > 0 ){
+				$row = mysqli_fetch_array($res);
+				if($row[0] == md5($pwd)){
+					$_SESSION["username"] = $username;
+					$_SESSION["login_time"] = time();
+					header("Location: login.php?result=1");
+				} else throw new Exception("Wrong username or password");
+			} else throw new Exception("Username not found in the database");
+			mysqli_free_result($res);
+			mysqli_close($link);
+		}else throw new Exception( "Can't connect to the database");
+	} catch(Exception $e){
+		$_SESSION["loginFailure"] = $e -> getMessage();
+		header("Location: login.php?result=0");
+		exit();
 	}
 	
 ?>

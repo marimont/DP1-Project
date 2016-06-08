@@ -1,6 +1,8 @@
 <?php
 	session_start();
 	include 'stat.php';
+	/*to be sure that ckeckcookies function will not attach other parameters*/
+	$_SESSION["params"] = "";
 	cookiesEnabled();
 	if(isLogged()){
 		$_SESSION["login_time"] = time();

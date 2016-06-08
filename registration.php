@@ -2,6 +2,14 @@
 	session_start();
 	include_once 'stat.php';
 	checkHTTPS();
+	/*I need to save eventual arguments coming from GET requests:
+	 *when I come back from authentication form, the current page will check the result
+	 *which is URL encoded. But, since, cookies will be checked by means of GET params too, I must be certain
+	 *that I'm not going to lose registration result*/
+	if(isset($_REQUEST['result']))
+		$_SESSION["params"] = "&result=".$_REQUEST['result'];
+	else
+		$_SESSION["params"] = "";
 	cookiesEnabled();
 	if(isLogged()){
 		$_SESSION["login_time"] = time();
@@ -85,36 +93,73 @@
   		</font></h3>
 	</div>
 	</noscript>
-	<div style="display: table; margin: 0 auto; text-align: center; padding-top: 10px;">
-	<h2 style="text-align: center;">Registration</h2>
-	
-	<form id=my_form action="do_reg.php" method="post">
-	<table>
-		<tr>
-			<th>Name</th>
-			<td><input type="text" class="input_field" id="name" name="name" maxlength="50" placeholder="your name" ></td>
-		</tr>
-		<tr>
-			<th>Surname</th>
-			<td><input type="text" class="input_field" id="surname" name="surname" maxlength="50" placeholder="your surname" ></td>
-		</tr>
-		<tr>
-			<th>Email Address</th>
-			<td><input type="text" class="input_field" id="email" name="email" maxlength="50" placeholder="sample@domain.com"></td>
-		</tr>
-		<tr>
-			<th>Password</th>
-			<td><input type="password" class="input_field" id="password" name="password" maxlength="50" placeholder="password" ></td>
-		</tr>
-		<tr>
-			<th>Repeat Password</th>
-			<td><input type="password" class="input_field" id="check_password" name="check_password" maxlength="50" placeholder="repeat password" ></td>
-		</tr>
-	</table>
-	<input type="button" value="Register" style="margin: 5px;" onclick="checkform()" >
-	</form>
-	
-	</div>
+	<?php 
+		if(!isset($_REQUEST["result"])){
+			/*registration form*/
+			echo "<div style=\"display: table; margin: 0 auto; text-align: center; padding-top: 10px;\">";
+			echo "<h2 style=\"text-align: center;\">Registration</h2>";
+			echo "<form id=my_form action=\"do_reg.php\" method=\"post\">";
+			echo "<table>";
+			echo "<tr><th>Name</th>
+			<td><input type=\"text\" class=\"input_field\" id=\"name\" name=\"name\" maxlength=\"50\" placeholder=\"your name\" ></td>
+			</tr>";
+			echo "<tr><th>Surname</th>
+				<td><input type=\"text\" class=\"input_field\" id=\"surname\" name=\"surname\" maxlength=\"50\" placeholder=\"your surname\" ></td>
+			</tr>";
+			echo "<tr><th>Email Address</th>
+			<td><input type=\"text\" class=\"input_field\" id=\"email\" name=\"email\" maxlength=\"50\" placeholder=\"sample@domain.com\"></td>
+			</tr>";
+			echo "<tr><th>Password</th>
+			<td><input type=\"password\" class=\"input_field\" id=\"password\" name=\"password\" maxlength=\"50\" placeholder=\"password\" ></td>
+			</tr>";
+			echo "<tr><th>Repeat Password</th>
+			<td><input type=\"password\" class=\"input_field\" id=\"check_password\" name=\"check_password\" maxlength=\"50\" placeholder=\"repeat password\" ></td>
+			</tr>";
+			echo "</table>";
+			echo "<input type=\"button\" value=\"Register\" style=\"margin: 5px;\" onclick=\"checkform()\" >";
+			echo "</form>";
+			echo "</div>";
+		} else if($_REQUEST["result"] == 1){
+			/*registration successful*/
+			echo "<div style=\"display: table; margin: 0 auto; text-align: center; padding-top: 10px;\">";
+			echo "<h2 style=\"text-align: center;\">Welcome to my site,<br>".$_SESSION["email"]."!</h2><br>";
+			echo "<h3>Your registration has been successfully completed</h3>";
+			echo "</div>";
+		} else{
+			/*registration failed*/
+			echo "<div style=\"display: table; margin: 0 auto; text-align: center; padding-top: 10px;\">";
+			echo "<h2 style=\"text-align: center;\">Registration failed: ".$_SESSION["regFailure"];
+			echo "</h2>";
+			echo "</div>";
+			
+			/*i show again the registration form*/
+			/*registration form*/
+			echo "<div style=\"display: table; margin: 0 auto; text-align: center; padding-top: 10px;\">";
+			echo "<h2 style=\"text-align: center;\">Registration</h2>";
+			echo "<form id=my_form action=\"do_reg.php\" method=\"post\">";
+			echo "<table>";
+			echo "<tr><th>Name</th>
+			<td><input type=\"text\" class=\"input_field\" id=\"name\" name=\"name\" maxlength=\"50\" placeholder=\"your name\" ></td>
+			</tr>";
+			echo "<tr><th>Surname</th>
+				<td><input type=\"text\" class=\"input_field\" id=\"surname\" name=\"surname\" maxlength=\"50\" placeholder=\"your surname\" ></td>
+			</tr>";
+			echo "<tr><th>Email Address</th>
+			<td><input type=\"text\" class=\"input_field\" id=\"email\" name=\"email\" maxlength=\"50\" placeholder=\"sample@domain.com\"></td>
+			</tr>";
+			echo "<tr><th>Password</th>
+			<td><input type=\"password\" class=\"input_field\" id=\"password\" name=\"password\" maxlength=\"50\" placeholder=\"password\" ></td>
+			</tr>";
+			echo "<tr><th>Repeat Password</th>
+			<td><input type=\"password\" class=\"input_field\" id=\"check_password\" name=\"check_password\" maxlength=\"50\" placeholder=\"repeat password\" ></td>
+			</tr>";
+			echo "</table>";
+			echo "<input type=\"button\" value=\"Register\" style=\"margin: 5px;\" onclick=\"checkform()\" >";
+			echo "</form>";
+			echo "</div>";
+		}
+	?>
+
 	<div style="display: table; margin: 0 auto; padding-top: 10px;">
 	<h2 style="text-align: center;">Reservations</h2>
 	<?php 

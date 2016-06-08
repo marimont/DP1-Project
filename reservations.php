@@ -1,6 +1,14 @@
 <?php
 	session_start();
 	include 'stat.php';
+	/*I need to save eventual arguments coming from GET requests:
+	 *when I come back from authentication form, the current page will check the result
+	 *which is URL encoded. But, since, cookies will be checked by means of GET params too, I must be certain
+	 *that I'm not going to lose add/rem reservation result*/
+	if(isset($_REQUEST['result']))
+		$_SESSION["params"] = "&result=".$_REQUEST['result'];
+	else
+		$_SESSION["params"] = "";
 	cookiesEnabled();
 	checkHTTPS();
 	if(isLogged()){
@@ -99,10 +107,16 @@ $(document).ready(function(){
 		startM = parseInt(startM);
 		machine = parseInt(machine);
 
+		if(isNaN(startH) || isNaN(startM)
+				|| isNaN(machine)){
+			alert("Bad input!"); return;
+		}
+
 		startT = startH *60 + startM;
 		var d = new Date();
-		if((d.getTime() - startT*60*1000) < 60){
-			alert("At least 1 minute from the planned start time must be elapsed!"); return;
+		var current_time = d.getHours() * 60 + d.getMinutes();
+		if((current_time - startT) < 1){
+			alert("Error: at least 1 minute from the planned start time must be elapsed"); return;
 		}
 
 		if(isNaN(startH) || isNaN(startM) || isNaN(machine)){
@@ -141,6 +155,23 @@ $(document).ready(function(){
   		</font></h3>
 	</div>
 	</noscript>
+	<?php 
+	/*In this case I'm gonna show user reservations in any case, so
+	 *there's only an additional message in case we reach the page from a redirection 
+	 *as a result of a rem/del reservation action*/
+	if(isset($_REQUEST["result"]) && $_REQUEST["result"] == 1){
+		/*add/rem ok*/
+		echo "<div style=\"display: table; margin: 0 auto; text-align: center; padding-top: 10px;\">";
+		echo "<h2 style=\"text-align: center;\">Operation correctly executed</h2><br>";
+		echo "</div>";
+		
+	} else if (isset($_REQUEST["result"]) && $_REQUEST["result"] == 0){
+		echo "<div style=\"display: table; margin: 0 auto; text-align: center; padding-top: 10px;\">";
+		echo "<h2 style=\"text-align: center;\">Requested operation failed<br>".$_SESSION["resFailure"];
+		echo "</h2>";
+		echo "</div>";
+	}
+	?>
 	<div style="display: table; margin: 0 auto; text-align: center;">
 	<div style="display: inline-block;">
 	<h2 style="text-align: center;">My reservations</h2>

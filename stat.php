@@ -11,7 +11,7 @@
 		//localhost won't work -> setcookie("test", "1", 0, "/", FALSE);
 		setcookie("test", "1");
 		if (!isset($_REQUEST["cookies"])) {
-      	  	header("Location: $_SERVER[PHP_SELF]?cookies=1");
+				header("Location: ". $_SERVER['PHP_SELF']."?cookies=1".$_SESSION['params']);
    		 }   		 
    		 if (!isset($_COOKIE["test"]) || (isset($_COOKIE["test"]) && $_COOKIE["test"] != "1"))
   			die("<h1>It seems that your browser doesn't accept cookies!</h1> <h3>Unfortunately we need cookies to provide you a good service.
