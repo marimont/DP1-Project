@@ -43,12 +43,24 @@
 		}else
 			alert("Empty fields!");
 	}
+
+	function my_reset(){
+	<?php 
+		/*In this way I will not receive an alert on firebug when the page is reached by redirection
+		 * after performing login, considering that I'm not showing the form, in that case*/
+		if(!isset($_REQUEST['result']))
+			echo "document.getElementById(\"my_form\").reset();";
+		
+		
+	?>
+	}
 //-->
 </script>
 <link href="mystyle.css" rel=stylesheet type="text/css">
 <title>Login</title>
 </head>
-<body onload="my_form.reset()">
+
+<body onload="my_reset()">
 <div id="header">
 	<h1>Login</h1>
 </div>
@@ -68,7 +80,8 @@
 	<noscript>
 	<div style="text-align: center;">
  		<h3><font face="Verdana,Arial,Helvetica,sans-serif">
-    	In order to be able to use this website, you must enable javascript.
+    	In order to be able to use this website, you must enable javascript.<br>
+    	WITHOUT JAVASCRIPT THE WEBSITE WON'T WORK!
   		</font></h3>
 	</div>
 	</noscript>

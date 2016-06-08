@@ -36,6 +36,14 @@
 	</ul>
 </div>
 <div id="section">
+	<noscript>
+	<div style="text-align: center;">
+ 		<h3><font face="Verdana,Arial,Helvetica,sans-serif">
+    	In order to be able to use this website, you must enable javascript.<br>
+    	WITHOUT JAVASCRIPT THE WEBSITE WON'T WORK!
+  		</font></h3>
+	</div>
+	</noscript>
 	<div style="display: table; margin: 0 auto;">
 	<h2 style="text-align: center;">Reservations</h2>
 	<?php 

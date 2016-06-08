@@ -151,7 +151,8 @@ $(document).ready(function(){
 	<noscript>
 	<div style="text-align: center;">
  		<h3><font face="Verdana,Arial,Helvetica,sans-serif">
-    	In order to be able to use this website, you must enable javascript.
+    	In order to be able to use this website, you must enable javascript.<br>
+    	WITHOUT JAVASCRIPT THE WEBSITE WON'T WORK!
   		</font></h3>
 	</div>
 	</noscript>

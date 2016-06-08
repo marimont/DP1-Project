@@ -1,5 +1,6 @@
 <?php
 	session_start();
+	require 'configDB.php';
 	
 	if(isset($_REQUEST["name"]) && isset($_REQUEST["surname"]) 
 			&& isset($_REQUEST["email"]) && isset($_REQUEST["password"]) && isset($_REQUEST["check_password"])){
@@ -14,7 +15,7 @@
 	
 	//double check on email format validity
 	$subject = $email;
-	$pattern = '/.+@.+\..{2,3}/';
+	$pattern = '/[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum|[a-zA-Z]{2})/';
 	if(!preg_match($pattern, $subject)){
 		$_SESSION["regFailure"] = "Invalid email format";
 		header("Location:registration.php?result=0.php");
@@ -22,7 +23,7 @@
 	}
 		
 	mysqli_report(MYSQLI_REPORT_ERROR);
-	if($link = mysqli_connect('localhost', 'root', '', 'assignment')){
+	if($link = my_connect()){
 		mysqli_autocommit($link, false);
 		try{
 			$name = mysqli_real_escape_string($link, $name);

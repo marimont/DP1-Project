@@ -49,7 +49,14 @@
 
 		//check email validity
 		var str = email;
-		var res = str.match(/.+@.+\..{2,3}/);
+		
+		//regex taken from the official standard is known as RFC 2822
+		//it's a simplified version that will still match 99.99% of all email addresses in actual use today
+		//It allows any two-letter country code top level domain, and only specific generic top level domains. 
+		//This regex filters dummy email addresses like asdf@adsf.adsf
+		
+		regex = /[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum|[a-zA-Z]{2})/;
+		var res = str.match(regex);
 		if(res != email){
 			alert(email + " is not a valid email address");
 			return;
@@ -63,12 +70,23 @@
 
 		document.getElementById("my_form").submit();
 	}
+
+	function my_reset(){
+	<?php 
+		/*In this way I will not receive an alert on firebug when the page is reached by redirection
+		 * after performing login, considering that I'm not showing the form, in that case*/
+		if(!isset($_REQUEST['result']))
+			echo "document.getElementById(\"my_form\").reset();";
+		
+		
+	?>
+	}
 //-->
 </script>
 <link href="mystyle.css" rel=stylesheet type="text/css">
 <title>Registration</title>
 </head>
-<body onload="my_form.reset()">
+<body onload="my_reset()">
 <div id="header">
 	<h1>Registration</h1>
 </div>
@@ -76,6 +94,7 @@
 	<ul>
 	<li><a href="index.php">Homepage</a></li>
 	<li><a href="reservations.php">Manage Reservations</a></li>
+	<li><a href="registration.php">Registration</a></li>
 	<?php 
 		if($isLogged){
 			echo "<li><a href=\"logout.php\">Logout</a></li>";
@@ -89,7 +108,8 @@
 	<noscript>
 	<div style="text-align: center;">
  		<h3><font face="Verdana,Arial,Helvetica,sans-serif">
-    	In order to be able to use this website, you must enable javascript.
+    	In order to be able to use this website, you must enable javascript.<br>
+    	WITHOUT JAVASCRIPT THE WEBSITE WON'T WORK!
   		</font></h3>
 	</div>
 	</noscript>
