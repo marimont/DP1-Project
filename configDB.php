@@ -1,6 +1,6 @@
 <?php
 
-$config = 0;
+$config = 1;
 $N = 4;
 
 function my_connect(){
