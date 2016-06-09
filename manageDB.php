@@ -51,7 +51,7 @@ function loadUserReservations($username){
 			if($res = mysqli_query($link, $query)){
 					if(mysqli_num_rows($res) > 0){
 					echo "<table class=\"reservations_table\">";
-					echo "<th>Machine</th><th>StartTime</th><th>Duration(min)</th>";
+					echo "<tr><th>Machine</th><th>StartTime</th><th>Duration(min)</th></tr>";
 					while ($row = mysqli_fetch_array($res)){
 						$machine = $row[0];
 						$machineID = $row[1];
