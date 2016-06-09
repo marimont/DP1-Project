@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Creato il: Giu 09, 2016 alle 10:27
+-- Creato il: Giu 09, 2016 alle 17:32
 -- Versione del server: 10.1.13-MariaDB
 -- Versione PHP: 5.5.34
 
@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `reservations`;
-
 DROP TABLE IF EXISTS `machines`;
-
 DROP TABLE IF EXISTS `users`;
+
+
 
 --
 -- Struttura della tabella `machines`
@@ -67,14 +67,14 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`ID`, `IDU`, `IDM`, `StartTime`, `EndTime`, `TimeStamp`) VALUES
-(3, 1, 1, 480, 540, 617),
-(4, 1, 1, 1140, 1200, 618),
-(5, 1, 2, 480, 540, 619),
-(6, 2, 1, 600, 660, 619),
-(7, 2, 1, 660, 720, 620),
-(8, 2, 2, 1170, 1200, 621),
-(9, 3, 1, 720, 780, 621),
-(10, 3, 3, 1170, 1230, 621);
+(1, 1, 1, 450, 480, 1048),
+(2, 1, 1, 480, 510, 1048),
+(3, 1, 1, 1170, 1230, 1049),
+(4, 2, 1, 570, 600, 1050),
+(5, 2, 1, 600, 630, 1050),
+(6, 2, 2, 1140, 1200, 1050),
+(7, 3, 1, 690, 720, 1050),
+(8, 3, 1, 720, 750, 1051);
 
 -- --------------------------------------------------------
 
@@ -95,9 +95,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`ID`, `Name`, `Surname`, `Email`, `Password`) VALUES
-(1, 'Marilisa', 'Montemurro', 'marilisamontemurro@gmail.com', '2a0c185dd3595236bf78d5b5edcabbf7'),
-(2, 'Mario', 'Rossi', 'mariorossi@gmail.com', '6f3240543cede5da63dc8d44bba868ac'),
-(3, 'Francesco', 'Bianchi', 'francescobianchi@gmail.com', 'b1ef8110a5aea71eba2e1f379078906d');
+(1, 'Mario', 'Rossi', 'mariorossi@gmail.com', '6f3240543cede5da63dc8d44bba868ac'),
+(2, 'Francesco', 'Bianchi', 'francescobianchi@gmail.com', 'b1ef8110a5aea71eba2e1f379078906d'),
+(3, 'Antonio', 'Romano', 'antonioromano@gmail.com', '2a0c185dd3595236bf78d5b5edcabbf7');
 
 --
 -- Indici per le tabelle scaricate
@@ -136,7 +136,7 @@ ALTER TABLE `machines`
 -- AUTO_INCREMENT per la tabella `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT per la tabella `users`
 --
