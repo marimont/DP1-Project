@@ -38,6 +38,9 @@
 <div id="section">
 	<noscript>
 	<div style="text-align: center;">
+	<!-- Google Chrome bug: some Google Chrome versions are affected by a bug: when disabling JavaScript
+	you have to refresh the page twice in order to be able to see correctly <noscript> element content 
+	(reference: http://stackoverflow.com/a/18116982) -->
  		<h3><font face="Verdana,Arial,Helvetica,sans-serif">
     	In order to be able to use this website, you must enable javascript.<br>
     	WITHOUT JAVASCRIPT THE WEBSITE WON'T WORK!
