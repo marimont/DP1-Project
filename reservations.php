@@ -141,17 +141,19 @@ $(document).ready(function(){
 	</ul>
 </div>
 <div id="section">
-	<noscript>
-	<!-- Google Chrome bug: some Google Chrome versions are affected by a bug: when disabling JavaScript
+<!-- Google Chrome bug: some Google Chrome versions are affected by a bug: when disabling JavaScript
 	you have to refresh the page twice in order to be able to see correctly <noscript> element content 
-	(reference: http://stackoverflow.com/a/18116982) -->
-	<div style="text-align: center;">
+	(reference: https://bugs.chromium.org/p/chromium/issues/detail?id=232410) 
+	
+	For this reason I encapsulated <noscript> tag within other tags: seeing  html tags at first reloas is quite annoying!-->
+	
+	<div style="text-align: center; color:red;">
  		<h3><font face="Verdana,Arial,Helvetica,sans-serif">
-    	In order to be able to use this website, you must enable javascript.<br>
-    	WITHOUT JAVASCRIPT THE WEBSITE WON'T WORK!
+ 		 <noscript>
+    	You must enable javascript or the website won't work
+    	</noscript>
   		</font></h3>
 	</div>
-	</noscript>
 	<?php 
 	/*In this case I'm gonna show user reservations in any case, so
 	 *there's only an additional message in case we reach the page from a redirection 
