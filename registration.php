@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	include_once 'stat.php';
+	require 'stat.php';
 	checkHTTPS();
 	/*I need to save eventual arguments coming from GET requests:
 	 *when I come back from authentication form, the current page will check the result
@@ -183,7 +183,7 @@
 	<div style="display: table; margin: 0 auto; padding-top: 10px;">
 	<h2 style="text-align: center;">Reservations</h2>
 	<?php 
-		include 'manageDB.php';
+		require 'manageDB.php';
 		loadDB();
 	?>
 	</div>

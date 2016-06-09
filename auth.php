@@ -1,16 +1,33 @@
 <?php
 	session_start();
-	
 	require 'configDB.php';
+	
 	if(isset($_REQUEST["username"]) && isset($_REQUEST["password"])){
+		if($_REQUEST["username"] !="" || $_REQUEST["password"] != ""){
 		$username = htmlentities($_REQUEST["username"]);
 		$pwd = $_REQUEST["password"];
 		/*I'm not sanitizing pwds in order to avoid weakening them
 		 * Thet're gonna be processed by a hash function, so they won't be offensive
 		 * */
+		} else die("<h1>Access forbidden</h1>");
 	} else die("<h1>Access forbidden</h1>");
 	
-	mysqli_report(MYSQLI_REPORT_ERROR);
+	/*Sanitizing strings is good practise but it's also a good idea to limit 
+	 * the numbers of chars that the  user can input*/
+	
+	if(strlen($username) > 50){
+		$_SESSION["loginFailure"] = "username maximum length is of 50 characters";
+		header("Location: login.php?result=0");
+		exit();
+	}
+	
+	if(strlen($pwd) > 50){
+		$_SESSION["loginFailure"] = "password maximum length is of 50 characters";
+		header("Location: login.php?result=0");
+		exit();
+	}
+	
+	//mysqli_report(MYSQLI_REPORT_ERROR);
 	try{
 		if($link = my_connect()){
 			$username = mysqli_real_escape_string($link, $username);

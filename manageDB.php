@@ -13,7 +13,7 @@ function loadDB(){
 			if($res = mysqli_query($link, $query)){
 				if(mysqli_num_rows($res) > 0){
 					echo "<table class=\"reservations_table\">";
-					echo "<th>User</th><th>Machine</th><th>StartTime</th><th>Duration(min)</th>";
+					echo "<tr><th>User</th><th>Machine</th><th>StartTime</th><th>Duration(min)</th></tr>";
 					while ($row = mysqli_fetch_array($res)){
 						$name = $row[0];
 						$surname = $row[1];

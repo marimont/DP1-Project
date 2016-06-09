@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	include 'stat.php';
+	require 'stat.php';
 	/*I need to save eventual arguments coming from GET requests:
 	 *when I come back from authentication form, the current page will check the result
 	 *which is URL encoded. But, since, cookies will be checked by means of GET params too, I must be certain
@@ -112,13 +112,6 @@ $(document).ready(function(){
 			alert("Bad input!"); return;
 		}
 
-		startT = startH *60 + startM;
-		var d = new Date();
-		var current_time = d.getHours() * 60 + d.getMinutes();
-		if((current_time - startT) < 1){
-			alert("Error: at least 1 minute from the planned start time must be elapsed"); return;
-		}
-
 		if(isNaN(startH) || isNaN(startM) || isNaN(machine)){
 			alert("Bad input!"); return;
 		}
@@ -177,7 +170,7 @@ $(document).ready(function(){
 	<div style="display: inline-block;">
 	<h2 style="text-align: center;">My reservations</h2>
 	<?php 
-		include 'manageDB.php';
+		require 'manageDB.php';
 		loadUserReservations($_SESSION["username"]);
 	?>
 	</div>

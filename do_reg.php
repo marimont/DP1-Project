@@ -4,14 +4,44 @@
 	
 	if(isset($_REQUEST["name"]) && isset($_REQUEST["surname"]) 
 			&& isset($_REQUEST["email"]) && isset($_REQUEST["password"]) && isset($_REQUEST["check_password"])){
-		$name = htmlentities($_REQUEST["name"]);
-		$surname = htmlentities($_REQUEST["surname"]);
-		$email = htmlentities($_REQUEST["email"]);
-		$pwd = $_REQUEST["password"];
+		if($_REQUEST["name"]!= "" && $_REQUEST["surname"] != ""
+			&& $_REQUEST["email"] != "" && $_REQUEST["password"] != "" && $_REQUEST["check_password"] != ""){
+			$name = htmlentities($_REQUEST["name"]);
+			$surname = htmlentities($_REQUEST["surname"]);
+			$email = htmlentities($_REQUEST["email"]);
+			$pwd = $_REQUEST["password"];
 		/*I'm not sanitizing pwds in order to avoid weakening them
 		 * Thet're gonna be processed by a hash function, so they won't be offensive
 		 * */
+		} else die("<h1>Access forbidden</h1>");
 	} else die("<h1>Access forbidden</h1>");
+	
+	/*Sanitizing strings is good practise but it's also a good idea to limit
+	 * the numbers of chars that the  user can input*/
+	
+	if(strlen($name) > 50){
+		$_SESSION["regFailure"] = "name maximum length is of 50 characters";
+		header("Location:registration.php?result=0.php");
+		exit();
+	}
+	
+	if(strlen($surname) > 50){
+		$_SESSION["regFailure"] = "surname maximum length is of 50 characters";
+		header("Location:registration.php?result=0.php");
+		exit();
+	}
+	
+	if(strlen($email) > 50){
+		$_SESSION["regFailure"] = "email maximum length is of 50 characters";
+		header("Location:registration.php?result=0.php");
+		exit();
+	}
+	
+	if(strlen($pwd) > 50){
+		$_SESSION["regFailure"] = "password maximum length is of 50 characters";
+		header("Location:registration.php?result=0.php");
+		exit();
+	}
 	
 	//double check on email format validity
 	$subject = $email;
@@ -22,12 +52,13 @@
 		exit();
 	}
 		
-	mysqli_report(MYSQLI_REPORT_ERROR);
+	//mysqli_report(MYSQLI_REPORT_ERROR);
 	if($link = my_connect()){
 		mysqli_autocommit($link, false);
 		try{
 			$name = mysqli_real_escape_string($link, $name);
 			$surname = mysqli_real_escape_string($link, $surname);
+			$email = mysqli_real_escape_string($link, $email);
 			$pwd = md5($pwd);
 			$query = "SELECT * FROM users WHERE Email = '$email' FOR UPDATE";
 			$res = mysqli_query($link, $query);

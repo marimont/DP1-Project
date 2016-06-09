@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	include 'stat.php';
+	require 'stat.php';
 	/*to be sure that ckeckcookies function will not attach other parameters*/
 	$_SESSION["params"] = "";
 	cookiesEnabled();
@@ -47,7 +47,7 @@
 	<div style="display: table; margin: 0 auto;">
 	<h2 style="text-align: center;">Reservations</h2>
 	<?php 
-		include 'manageDB.php';
+		require 'manageDB.php';
 		loadDB();
 	?>
 	</div>
