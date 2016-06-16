@@ -44,9 +44,12 @@
 	}
 	
 	//double check on email format validity
-	$subject = $email;
-	$pattern = '/[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum|[a-zA-Z]{2})/';
-	if(!preg_match($pattern, $subject)){
+	/*I didn't find a function similar to javascript str.match which returns the string and you can 
+	 * perform a comparison berween the email and the returned matching string, so that if partial match
+	 * is found the email would be discarded in any case. PHP preg_match only returns TRUE or FALSE 
+	 * so, if only a partial match is found, the email is accepted in any case! It's better to use 
+	 * this built-in function*/
+	if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
 		$_SESSION["regFailure"] = "Invalid email format";
 		header("Location:registration.php?result=0.php");
 		exit();
