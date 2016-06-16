@@ -81,6 +81,11 @@
 	</div>
 	<?php 
 		if(!isset($_REQUEST["result"]) || isset($_REQUEST["result"]) && !$isLogged){
+			/*I need to check both conditions (result and isLogged) because I could have
+			 * been performed a successful login and being inactive on the login success page.
+			 * If I reaload the page after two minutes, result is still set to 1 but I don't want to
+			 * see the "success" page, but the form, again: so I check if the user is still logged in
+			 * or not*/
 			if(isset($_REQUEST["manageReservations"]) && $_REQUEST["manageReservations"] = 1){
 				/*The user has been redirected from reservations page 
 				 * and I let him know that*/
