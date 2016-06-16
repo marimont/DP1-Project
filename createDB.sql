@@ -23,7 +23,7 @@ CREATE TABLE reservations(
 	IDM int(11) NOT NULL,
 	StartTime int(5) NOT NULL,
 	EndTime int(5) NOT NULL,
-	TimeStamp int(5) NOT NULL,
+	TimeStamp int NOT NULL,
 	PRIMARY KEY(ID),
 	FOREIGN KEY(IDU) references users(ID),
 	FOREIGN KEY(IDM) references machines(ID)

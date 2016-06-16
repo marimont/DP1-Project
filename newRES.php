@@ -1,11 +1,19 @@
 <?php
-	session_start();
+	require 'checkStatusAndSession.php';
 	require 'configDB.php';
+	
+	if(!$isLogged){
+		/*i redirect the user to login page, letting him know, throught this GET parameter
+		 * that  he has been redirected there from here.
+		 */
+		header("Location:login.php?manageReservations=1");
+		exit;
+	}
 	
 	if(isset($_REQUEST["startH"]) && isset($_REQUEST["startM"]) 
 			&& isset($_REQUEST["endH"]) && isset($_REQUEST["endM"])){
-		if($_REQUEST["startH"] != "" && $_REQUEST["startM"]
-				&& $_REQUEST["endH"] != "" && $_REQUEST["endM"]){
+		if($_REQUEST["startH"] != "" && $_REQUEST["startM"] != ""
+				&& $_REQUEST["endH"] != "" && $_REQUEST["endM"] != ""){
 		$startH = htmlentities($_REQUEST["startH"]);
 		$startM = htmlentities($_REQUEST["startM"]);
 		$endH = htmlentities($_REQUEST["endH"]);
@@ -72,9 +80,13 @@
 
 			mysqli_free_result($res);
 			
-			/*Saving current time in minutes in order to satisfy the time constraint on removal*/
-			$timestamp_array = getdate();
-			$timestamp = $timestamp_array['hours']*60 + $timestamp_array['minutes'];
+			/*Saving current timestamp in order to satisfy the time constraint on removal
+			 * One key point is that I cannot save just hrs and minutes of the current
+			 * date otherwise, if I try to remove one reservation some days after the
+			 * day it has been inserted, but at a time in a day which preceeds the time
+			 * in day when the reservation was inserted, I cannot remove it because
+			 * the system would consider the constraint on time violated*/
+			$timestamp = time();
 			
 			$query = "INSERT INTO reservations(IDU, IDM, StartTime, EndTime, TimeStamp) VALUES('$idu', '$idm', $startT, $endT, $timestamp)";
 			$res = mysqli_query($link, $query);

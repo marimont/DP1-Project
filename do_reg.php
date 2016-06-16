@@ -1,5 +1,5 @@
 <?php
-	session_start();
+	require 'checkStatusAndSession.php';
 	require 'configDB.php';
 	
 	if(isset($_REQUEST["name"]) && isset($_REQUEST["surname"]) 

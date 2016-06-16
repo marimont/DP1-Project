@@ -1,11 +1,19 @@
 <?php
-	session_start();
+	require 'checkStatusAndSession.php';
 	require 'configDB.php';
+	if(!$isLogged){
+		/*i redirect the user to login page, letting him know, throught this GET parameter
+		 * that  he has been redirected there from here.
+		 */
+		header("Location:login.php?manageReservations=1");
+		exit;
+	}
+	
 	
 	if(isset($_REQUEST["startH"]) && isset($_REQUEST["startM"]) 
 			&& isset($_REQUEST["machine"])){
-		if($_REQUEST["startH"] != "" && $_REQUEST["startM"]
-				&& $_REQUEST["machine"]){
+		if($_REQUEST["startH"] != "" && $_REQUEST["startM"] != ""
+				&& $_REQUEST["machine"] != ""){
 			$startH = htmlentities($_REQUEST["startH"]);
 			$startM = htmlentities($_REQUEST["startM"]);
 			$machineID = htmlentities($_REQUEST["machine"]);
@@ -57,10 +65,9 @@
 			$timestamp = $row[1];
 			mysqli_free_result($res);
 			
-			$current_time_array = getdate();
-			$current_time = $current_time_array['hours']*60 + $current_time_array['minutes'];
+			$current_time = time();
 			
-			if(($current_time - $timestamp) < 1)
+			if(($current_time - $timestamp) < 60)
 				throw new Exception("Reservation can't be cancelled: at least 1 minute from the reservation <br> registration
 				must be elapsed!");
 		

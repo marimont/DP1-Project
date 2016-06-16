@@ -1,6 +1,12 @@
 <?php
 	session_start();
 	require 'configDB.php';
+	require 'stat.php';
+	cookiesEnabled();
+	checkHTTPS();
+	/*here it makes no sense to check if the user is logged in or not:
+	 * the login page sent its form here to perform login, so he is logged out!
+	 */
 	
 	if(isset($_REQUEST["username"]) && isset($_REQUEST["password"])){
 		if($_REQUEST["username"] !="" || $_REQUEST["password"] != ""){

@@ -1,22 +1,10 @@
 <?php
-	session_start();
-	require 'stat.php';
-	/*I need to save eventual arguments coming from GET requests:
-	 *when I come back from authentication form, the current page will check the result
-	 *which is URL encoded. But, since, cookies will be checked by means of GET params too, I must be certain
-	 *that I'm not going to lose add/rem reservation result*/
-	if(isset($_REQUEST['result']))
-		$_SESSION["params"] = "&result=".$_REQUEST['result'];
-	else
-		$_SESSION["params"] = "";
-	cookiesEnabled();
-	checkHTTPS();
-	if(isLogged()){
-		$_SESSION["login_time"] = time();
-		$_SESSION["page"] = $_SERVER["REQUEST_URI"];
-		$isLogged = true;
-	} else {
-		header("Location:login.php");
+	require 'checkStatusAndSession.php';
+	if(!$isLogged){
+		/*i redirect the user to login page, letting him know, throught this GET parameter
+		 * that  he has been redirected there from here.
+		 */
+		header("Location:login.php?manageReservations=1");
 		exit;
 	}
 ?>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Creato il: Giu 09, 2016 alle 17:32
+-- Creato il: Giu 16, 2016 alle 11:08
 -- Versione del server: 10.1.13-MariaDB
 -- Versione PHP: 5.5.34
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `assignment`
+-- Database: `s231579`
 --
 
 -- --------------------------------------------------------
@@ -25,7 +25,6 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `reservations`;
 DROP TABLE IF EXISTS `machines`;
 DROP TABLE IF EXISTS `users`;
-
 
 
 --
@@ -50,35 +49,6 @@ INSERT INTO `machines` (`ID`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `reservations`
---
-
-CREATE TABLE `reservations` (
-  `ID` int(11) NOT NULL,
-  `IDU` int(11) NOT NULL,
-  `IDM` int(11) NOT NULL,
-  `StartTime` int(5) NOT NULL,
-  `EndTime` int(5) NOT NULL,
-  `TimeStamp` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dump dei dati per la tabella `reservations`
---
-
-INSERT INTO `reservations` (`ID`, `IDU`, `IDM`, `StartTime`, `EndTime`, `TimeStamp`) VALUES
-(1, 1, 1, 450, 480, 1048),
-(2, 1, 1, 480, 510, 1048),
-(3, 1, 1, 1170, 1230, 1049),
-(4, 2, 1, 570, 600, 1050),
-(5, 2, 1, 600, 630, 1050),
-(6, 2, 2, 1140, 1200, 1050),
-(7, 3, 1, 690, 720, 1050),
-(8, 3, 1, 720, 750, 1051);
-
--- --------------------------------------------------------
-
---
 -- Struttura della tabella `users`
 --
 
@@ -97,7 +67,39 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`ID`, `Name`, `Surname`, `Email`, `Password`) VALUES
 (1, 'Mario', 'Rossi', 'mariorossi@gmail.com', '6f3240543cede5da63dc8d44bba868ac'),
 (2, 'Francesco', 'Bianchi', 'francescobianchi@gmail.com', 'b1ef8110a5aea71eba2e1f379078906d'),
-(3, 'Antonio', 'Romano', 'antonioromano@gmail.com', '2a0c185dd3595236bf78d5b5edcabbf7');
+(3, 'Antonio', 'Romano', 'antonioromano@gmail.com', '8c31c795d323c71959fdc66cdca536f0');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `reservations`
+--
+
+CREATE TABLE `reservations` (
+  `ID` int(11) NOT NULL,
+  `IDU` int(11) NOT NULL,
+  `IDM` int(11) NOT NULL,
+  `StartTime` int(5) NOT NULL,
+  `EndTime` int(5) NOT NULL,
+  `TimeStamp` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `reservations`
+--
+
+INSERT INTO `reservations` (`ID`, `IDU`, `IDM`, `StartTime`, `EndTime`, `TimeStamp`) VALUES
+(1, 1, 1, 420, 435, 1466067925),
+(2, 1, 1, 450, 495, 1466067936),
+(3, 1, 1, 1100, 1140, 1466067951),
+(4, 2, 1, 540, 585, 1466067981),
+(5, 2, 1, 600, 660, 1466067994),
+(6, 2, 2, 1125, 1140, 1466068012),
+(7, 3, 1, 740, 780, 1466068044),
+(8, 3, 1, 810, 840, 1466068055);
+
+-- --------------------------------------------------------
+
 
 --
 -- Indici per le tabelle scaricate

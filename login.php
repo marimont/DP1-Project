@@ -1,24 +1,9 @@
 <?php
-	session_start();
-	require 'stat.php';
-	checkHTTPS();
-	/*I need to save eventual arguments coming from GET requests:
-	 *when I come back from authentication form, the current page will check the result
-	 *which is URL encoded. But, since, cookies will be checked by means of GET params too, I must be certain
-	 *that I'm not going to lose login result*/
-	if(isset($_REQUEST['result']))
-		$_SESSION["params"] = "&result=".$_REQUEST['result'];
-	else
-		$_SESSION["params"] = "";
-	cookiesEnabled();
-	if(isLogged()){
-		$_SESSION["login_time"] = time();
-		/*when performing logout I want to be redirected to the main login page, it makes no sense
-		 * redirecting to one of the result page!!*/
+	require 'checkStatusAndSession.php';
+	if($isLogged)
+		/*I overwrite this session variable so that if the user performs a logout
+		 * from the "login success" view he won't be redirected there but to the login page*/
 		$_SESSION["page"] = "login.php";
-		$isLogged = true;
-	} else
-		$isLogged = false;
 ?>
 <!DOCTYPE html>
 <html>
@@ -92,7 +77,19 @@
 	</div>
 	<?php 
 		if(!isset($_REQUEST["result"])){
+			if(isset($_REQUEST["manageReservations"]) && $_REQUEST["manageReservations"] = 1){
+				/*The user has been redirected from reservations page 
+				 * and I let him know that*/
+				$toBeLogged = true;
+			} else{
+				$toBeLogged = false;
+			}
 			/*Login form*/
+			if($toBeLogged){
+				echo "<h3 style=\"color: red; text-align: center;\"><font face=\"Verdana,Arial,Helvetica,sans-serif;\">
+    				You must be logged in order to manage your reservations
+    				</font></h3>";
+			}
 			echo "<div style=\"display: table; margin: 0 auto; text-align: center; padding-top: 10px;\">";
 			echo "<h2 style=\"text-align: center;\">Login</h2>";
 			if($isLogged)
@@ -110,7 +107,6 @@
 				echo "<input type=\"button\" value=\"Login\" style=\"margin: 5px;\" onclick=\"checkform()\" >";
 				echo "</form>";
 			}
-			
 			echo "</div>";
 			
 		} else if($_REQUEST["result"] == "1"){

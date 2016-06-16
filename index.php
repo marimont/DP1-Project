@@ -1,15 +1,5 @@
 <?php
-	session_start();
-	require 'stat.php';
-	/*to be sure that ckeckcookies function will not attach other parameters*/
-	$_SESSION["params"] = "";
-	cookiesEnabled();
-	if(isLogged()){
-		$_SESSION["login_time"] = time();
-		$_SESSION["page"] = $_SERVER["REQUEST_URI"];
-		$isLogged = true;
-	} else 
-		$isLogged = false;
+	require 'checkStatusAndSession.php';
 ?>
 <!DOCTYPE html>
 <html>
