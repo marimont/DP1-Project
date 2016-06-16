@@ -140,7 +140,7 @@
 		} else{
 			/*registration failed*/
 			echo "<div style=\"display: table; margin: 0 auto; text-align: center; padding-top: 10px;\">";
-			echo "<h2 style=\"text-align: center;\">Registration failed: ".$_SESSION["regFailure"];
+			echo "<h2 style=\"color: red; text-align: center;\">Registration failed: ".$_SESSION["regFailure"];
 			echo "</h2>";
 			echo "</div>";
 			

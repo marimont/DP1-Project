@@ -127,7 +127,7 @@
 		} else{
 			/*login failed*/
 			echo "<div style=\"display: table; margin: 0 auto; text-align: center; padding-top: 10px;\">";
-			echo "<h2 style=\"text-align: center;\">Login failed: ".$_SESSION["loginFailure"];
+			echo "<h2 style=\"color: red; text-align: center;\">Login failed: ".$_SESSION["loginFailure"];
 			echo "</h2>";
 			echo "</div>";
 			

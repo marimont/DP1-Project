@@ -158,7 +158,7 @@ $(document).ready(function(){
 		
 	} else if (isset($_REQUEST["result"]) && $_REQUEST["result"] == 0){
 		echo "<div style=\"display: table; margin: 0 auto; text-align: center; padding-top: 10px;\">";
-		echo "<h2 style=\"text-align: center;\">Requested operation failed<br>".$_SESSION["resFailure"];
+		echo "<h2 style=\"color: red; text-align: center;\">Requested operation failed<br>".$_SESSION["resFailure"];
 		echo "</h2>";
 		echo "</div>";
 	}
