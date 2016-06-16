@@ -37,11 +37,13 @@
 	try{
 		if($link = my_connect()){
 			$username = mysqli_real_escape_string($link, $username);
-			$query = "SELECT Password FROM users WHERE Email = '$username'";
+			$query = "SELECT Password, Name, Surname FROM users WHERE Email = '$username'";
 			$res = mysqli_query($link, $query);
 			if(mysqli_num_rows($res) > 0 ){
 				$row = mysqli_fetch_array($res);
 				if($row[0] == md5($pwd)){
+					$_SESSION["name"] = $row[1];
+					$_SESSION["surname"] = $row[2];
 					$_SESSION["username"] = $username;
 					$_SESSION["login_time"] = time();
 					header("Location: login.php?result=1");

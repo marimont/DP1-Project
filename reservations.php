@@ -122,6 +122,10 @@ $(document).ready(function(){
 	<h1>Reservations Managment</h1>
 </div>
 <div id="nav">
+	<?php 
+		if($isLogged)
+			echo "<div style=\"display: table; margin: 10px auto; align-text: center;\"><b>".$_SESSION["name"]." ".$_SESSION["surname"]."</b></div>";
+	?>
 	<ul>
 	<li><a href="index.php">Homepage</a></li>
 	<li><a href="registration.php">Registration</a></li>

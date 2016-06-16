@@ -50,6 +50,10 @@
 	<h1>Login</h1>
 </div>
 <div id="nav">
+	<?php 
+		if($isLogged)
+			echo "<div style=\"display: table; margin: 10px auto; align-text: center;\"><b>".$_SESSION["name"]." ".$_SESSION["surname"]."</b></div>";
+	?>
 	<ul>
 	<li><a href="index.php">Homepage</a></li>
 	<li><a href="reservations.php">Manage Reservations</a></li>
@@ -76,7 +80,7 @@
   		</font></h3>
 	</div>
 	<?php 
-		if(!isset($_REQUEST["result"])){
+		if(!isset($_REQUEST["result"]) || isset($_REQUEST["result"]) && !$isLogged){
 			if(isset($_REQUEST["manageReservations"]) && $_REQUEST["manageReservations"] = 1){
 				/*The user has been redirected from reservations page 
 				 * and I let him know that*/
