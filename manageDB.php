@@ -12,8 +12,8 @@ function loadDB(){
 					ORDER BY R.IDU, R.StartTime";
 			if($res = mysqli_query($link, $query)){
 				if(mysqli_num_rows($res) > 0){
-					echo "<table class=\"reservations_table\">";
-					echo "<tr><th>User</th><th>Machine</th><th>StartTime</th><th>Duration(min)</th></tr>";
+					echo "<table class=\"pure-table\">";
+					echo "<thead><tr><th>User</th><th>Machine</th><th>StartTime</th><th>Duration(min)</th></tr></thead>";
 					while ($row = mysqli_fetch_array($res)){
 						$name = $row[0];
 						$surname = $row[1];
@@ -44,24 +44,26 @@ function loadDB(){
 function loadUserReservations($username){
 	try{
 		if($link = my_connect()){
-			$query = "SELECT M.Name, M.ID, R.StartTime, R.EndTime
+			$query = "SELECT M.Name, M.ID, R.StartTime, R.EndTime, R.ID
 				FROM reservations AS R, users AS U, machines AS M
 				WHERE R.IDU = U.ID AND R.IDM = M.ID AND U.Email = '$username'
 				ORDER BY R.StartTime";
 			if($res = mysqli_query($link, $query)){
 					if(mysqli_num_rows($res) > 0){
-					echo "<table class=\"reservations_table\">";
-					echo "<tr><th>Machine</th><th>StartTime</th><th>Duration(min)</th></tr>";
+					echo "<table class=\"pure-table\" style=\"margin:20px;\">";
+					echo "<thead><tr><th>Machine</th><th>StartTime</th><th>Duration(min)</th><th></th></tr></thead>";
 					while ($row = mysqli_fetch_array($res)){
 						$machine = $row[0];
 						$machineID = $row[1];
 						$duration = $row[3] - $row[2];
+						$reservationID = $row[4];
 						$startTimeH = intval($row[2]/60);
 						$startTimeHstr = sprintf("%02d", $startTimeH);
 						$startTimeM = $row[2]%60;
 						$startTimeMstr = sprintf("%02d", $startTimeM);
 						echo "<tr>";
-						echo "<td>$machine (ID = $machineID)</td><td>$startTimeHstr:$startTimeMstr</td><td>$duration</td>";
+						echo "<td>$machine (ID = $machineID)</td><td>$startTimeHstr:$startTimeMstr</td><td>$duration</td>
+						<td><input type=\"submit\" name=\"$reservationID\" class=\"pure-button pure-button-primary\" value=\"Remove\" style=\"margin: 5px;\"></td>";
 						echo "</tr>";
 					}
 					echo "</table>";

@@ -15,7 +15,11 @@
 		/*I'm not sanitizing pwds in order to avoid weakening them
 		 * Thet're gonna be processed by a hash function, so they won't be offensive
 		 * */
-		} else die("<h1>Access forbidden</h1>");
+		} else {
+			$_SESSION["loginFailure"] = "empty fields";
+			header("Location: login.php?result=0");
+			exit();
+		}
 	} else die("<h1>Access forbidden</h1>");
 	
 	/*Sanitizing strings is good practise but it's also a good idea to limit 

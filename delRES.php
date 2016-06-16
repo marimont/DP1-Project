@@ -9,75 +9,68 @@
 		exit;
 	}
 	
-	
-	if(isset($_POST["startH"]) && isset($_POST["startM"]) 
-			&& isset($_POST["machine"])){
-		if($_POST["startH"] != "" && $_POST["startM"] != ""
-				&& $_POST["machine"] != ""){
-			$startH = htmlentities($_REQUEST["startH"]);
-			$startM = htmlentities($_REQUEST["startM"]);
-			$machineID = htmlentities($_REQUEST["machine"]);
-		} else die("<h1>Access forbidden</h1>");
-	} else die("<h1>Access forbidden</h1>");
-	
-	if(!is_numeric($startH) || !is_numeric($startM) || !is_numeric($machineID)){
-		$_SESSION["resFailure"] = "Wrong input values: not numeric";
+	/*in this way I'm sure I arrived here from a form*/
+	if(count($_POST) <= 0){
+		$_SESSION["resFailure"] = "access forbidden";
 		header("Location:reservations.php?result=0");
 		exit();
 	}
-		
-	//double check on input validity;
-	if($startH < 0 || $startH > 23
-			|| $startM < 0 || $startM >59){
-		$_SESSION["resFailure"] = "Wrong input values: out of range";
+	
+	$found = false;
+	foreach($_POST as $reservationID => $value){
+		if($value == "Remove"){
+			$found = true;
+			break;
+		}
+	}
+	
+	if($found == false){
+		$_SESSION["resFailure"] = "access forbidden";
 		header("Location:reservations.php?result=0");
 		exit();
 	}
-		
+	
 	//mysqli_report(MYSQLI_REPORT_ERROR);
 	if($link = my_connect()){
 		mysqli_autocommit($link, false);
 		try{
-			$startH = mysqli_real_escape_string($link, $startH);
-			$startM = mysqli_real_escape_string($link, $startM);
-			$machineID = mysqli_real_escape_string($link, $machineID);
-			$startT = $startH*60 + $startM;
+			/*This check is needed to avoid some code injection: somebody could send
+			 * some post from the outside and so it is important to check that the user
+			 * that is trying to delete a reservation is eliminating its own reservations*/
 			$prequery = "SELECT ID FROM users WHERE Email = '".$_SESSION["username"]."'";
 			$res = mysqli_query($link, $prequery);
 			if(!$res)
 				throw new Exception("Query failed");
 			if(mysqli_num_rows($res) == 0 )
-				throw new Exception("User identification failed");
+				throw new Exception("user identification failed");
 			$row = mysqli_fetch_array($res);
 			$idu = $row[0];		
 			mysqli_free_result($res);
 		
-			/*User identification: if someone tries to delete other user reservations will be blocked*/
-			$query = "SELECT ID, TimeStamp from reservations WHERE IDM = $machineID AND StartTime = $startT AND IDU = $idu";
+			$query = "SELECT TimeStamp from reservations WHERE ID = $reservationID";
 			$res = mysqli_query($link, $query);
 			if(!$res)
 				throw new Exception("Query failed");
 			if(mysqli_num_rows($res) == 0 )
-				throw new Exception("No reservation found for the specified machine <br> at the specified time slot at your name!");
+				throw new Exception("reservation can't be found!");
 			
 			$row = mysqli_fetch_array($res);
-			$id = $row[0];
-			$timestamp = $row[1];
+			$timestamp = $row[0];
 			mysqli_free_result($res);
 			
 			$current_time = time();
 			
 			if(($current_time - $timestamp) < 60)
-				throw new Exception("Reservation can't be cancelled: at least 1 minute from the reservation <br> registration
+				throw new Exception("at least 1 minute from the reservation insertion
 				must be elapsed!");
 		
-			$query = "DELETE FROM reservations WHERE ID = $id";
+			$query = "DELETE FROM reservations WHERE ID = $reservationID";
 			$res = mysqli_query($link, $query);
 			if($res && mysqli_affected_rows($link) == 1){
 				mysqli_commit($link);
 				header("Location:reservations.php?result=1");
 				exit();
-			} else throw new Exception("Elimination failed");
+			} else throw new Exception("elimination failed");
 		} catch(Exception $e){
 			mysqli_rollback($link);
 			$_SESSION["resFailure"] = $e -> getMessage();

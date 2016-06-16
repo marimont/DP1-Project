@@ -12,26 +12,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<link href="mystyle.css" rel=stylesheet type="text/css">
 <title>Reservations</title>
-<script type="text/javascript" src="jquery-1.12.4.js"></script>
-<script type="text/javascript"> 
-$(document).ready(function(){
- 	$("#add").click(function(){
-   	 $("#addpanel").slideDown("slow");
-    	$(".buttonsPanel").hide();
- 	 });
- 	$("#remove").click(function(){
-	    $("#removepanel").slideDown("slow");
-	    $(".buttonsPanel").hide();
-	 });
-	$(".cancel").click(function(){
-	    $(".panel").slideUp("slow");
-	    $(".buttonsPanel").show();
-	});
-
-});
-</script>
 <script type="text/javascript">
 <!--
 	function checkform(){
@@ -41,19 +22,19 @@ $(document).ready(function(){
 		endM = document.getElementById("endM").value;
 
 		if(startH == "" || startM == "" || endH == "" || endM == ""){
-			alert("Empty fields!"); return;
+			alert("Empty fields!"); return false;
 		}
 		if(startH < 0 || startH > 23){
-			alert("Start Hour: " + startH + " - Value not allowed!"); return;
+			alert("Start Hour: " + startH + " - Value not allowed!"); return false;
 		}
 		if(endH < 0 || endH > 23){
-			alert("End Hour: " + endH + " - Value not allowed!"); return;
+			alert("End Hour: " + endH + " - Value not allowed!"); return false;
 		}
 		if(startM < 0 || startM > 59){
-			alert("Start Minute: " + startM + " - Value not allowed!"); return;
+			alert("Start Minute: " + startM + " - Value not allowed!"); return false;
 		}
 		if(endM < 0 || endM > 59){
-			alert("End Minute: " + endM + " - Value not allowed!"); return;
+			alert("End Minute: " + endM + " - Value not allowed!"); return false;
 		}
 		startH = parseInt(startH);
 		startM = parseInt(startM);
@@ -62,161 +43,105 @@ $(document).ready(function(){
 
 		if(isNaN(startH) || isNaN(startM)
 				|| isNaN(endH) || isNaN(endM)){
-			alert("Bad input!"); return;
+			alert("Bad input!"); return false;
 		}
 		
 		startT = startH *60 + startM;
 		endT = endH*60 + endM;
 
 		if((endT - startT) <= 0){
-			alert("Wrong input: ending time must follow starting time!"); return;
+			alert("Wrong input: ending time must follow starting time!"); 
+			return false;
 		}
 		
-		document.getElementById("my_form").submit();
-	}
-
-	function checkRemform(){
-		startH = document.getElementById("startH_r").value;
-		startM = document.getElementById("startM_r").value;
-		machine = document.getElementById("machine").value;
-
-		if(startH == "" || startM == "" || machine == ""){
-			alert("Empty fields!"); return;
-		}
-		if(startH < 0 || startH > 23){
-			alert("Start Hour: " + startH + " - Value not allowed!"); return;
-		}
-	
-		if(startM < 0 || startM > 59){
-			alert("Start Minute: " + startM + " - Value not allowed!"); return;
-		}
-	
-		startH = parseInt(startH);
-		startM = parseInt(startM);
-		machine = parseInt(machine);
-
-		if(isNaN(startH) || isNaN(startM)
-				|| isNaN(machine)){
-			alert("Bad input!"); return;
-		}
-
-		if(isNaN(startH) || isNaN(startM) || isNaN(machine)){
-			alert("Bad input!"); return;
-		}
-	
-		document.getElementById("my_remform").submit();
+		return true;
 	}
 	
 //-->
 </script>
-<style type="text/css">
-	.panel{
-		background-color: #eeeeee;
-		display: none;
-		margin: 5px auto;
-	}
-</style>
+<link rel="stylesheet" href="css/layouts/pure-mini.css">
+<link rel="stylesheet" href="css/layouts/side-menu.css">
 </head>
 <body onload="my_form.reset(); my_remform.reset();">
-<div id="header">
-	<h1>Reservations Managment</h1>
-</div>
-<div id="nav">
-	<?php 
-		if($isLogged)
-			echo "<div style=\"display: table; margin: 10px auto; align-text: center;\"><b>".$_SESSION["name"]." ".$_SESSION["surname"]."</b></div>";
-	?>
-	<ul>
-	<li><a href="index.php">Homepage</a></li>
-	<li><a href="registration.php">Registration</a></li>
-	<li><a href="logout.php">Logout</a></li>
-	</ul>
-</div>
-<div id="section">
-<!-- Google Chrome bug: some Google Chrome versions are affected by a bug: when disabling JavaScript
-	you have to refresh the page twice in order to be able to see correctly <noscript> element content 
-	(reference: https://bugs.chromium.org/p/chromium/issues/detail?id=232410) 
+<div id="layout">
+
+    <div id="menu">
+        <div class="pure-menu">
+        <p class="pure-menu-heading"><br></p>
+         	 <?php 
+				echo "<div style=\"display: table; margin: 10px auto; align-text: center;\"><b>".$_SESSION["name"]." ".$_SESSION["surname"]."</b></div>";
+			?>
+			<ul class="pure-menu-list">
+				<li class="pure-menu-item"><a href="index.php" class="pure-menu-link">Homepage</a></li>
+				<li class="pure-menu-item"><a href="registration.php" class="pure-menu-link">Registration</a></li>
+				<li class="pure-menu-item"><a href="logout.php" class="pure-menu-link">Logout</a></li>
+			</ul>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="header">
+            <h1>Reservations Management</h1>
+        </div>
+
+        <div class="content" style="display: table; margin: 0 auto">
+        	
+ 			<h3 class="error">
+ 			 	<noscript>
+    			You should enable javascript or the website may not work properly
+    			</noscript>
+  			</h3>
+  			
+			<?php 
+			/*In this case I'm gonna show user reservations in any case, so
+		 	*there's only an additional message in case we reach the page from a redirection 
+			 *as a result of a rem/del reservation action*/
+			if(isset($_REQUEST["result"]) && $_REQUEST["result"] == 1){
+				/*add/rem ok*/
+				echo "<h2 class=\"success\">Operation correctly executed</h2><br>";
+			} else if (isset($_REQUEST["result"]) && $_REQUEST["result"] == 0){
+				echo "<h2 class=\"error\">Requested operation failed: ".$_SESSION["resFailure"];
+				echo "</h2>";
+			}
+			?>
+		<h2 class="content-subhead">My reservations</h2>
+		<?php 
+			require 'manageDB.php';
+			echo "<form action=\"delRES.php\" method=\"post\">";
+			loadUserReservations($_SESSION["username"]);
+			echo "</form>"
+		?>
+			<form id="my_form" class="pure-form pure-form-aligned" action="newRES.php" method="post" onsubmit="return checkform()">
+			<fieldset>
+			<legend>Add a new reservation</legend>
+				<div class="pure-control-group">
+          		 	<label for="startH">Start Time</label>
+            		<input type="text" id="startH" name ="startH" style= "text-align: right" placeholder="HH" maxlength="2" required>
+            		<input type="text" id="startM" name ="startM" style= "text-align: right" placeholder="MM" maxlength="2" required>
+       			</div>
+       			<div class="pure-control-group">
+       				<label for="endH">End Time</label>
+					<input type="text" id="endH" name ="endH" style= "text-align: right" placeholder="HH" maxlength="2" required> 
+					<input type="text" id="endM" name ="endM" style= "text-align: right" placeholder="MM" maxlength="2" required>
+       			</div>
+				<div class="pure-controls">
+					<input type="submit" class="pure-button pure-button-primary" id="confirm" value="Confirm" style="margin: 5px;" >
+					<input type="reset" class="pure-button pure-button-primary" value="Cancel" style="margin: 5px;">		
+				</div>
+			</fieldset>
+		</form>
 	
-	For this reason I encapsulated <noscript> tag within other tags: seeing  html tags at first reloas is quite annoying!-->
+            <h2 class="content-subhead">Reservations</h2>
+            <p>
+               <?php 
+				loadDB();
+				?>
+            </p>
+	</div>
 	
-	<div style="text-align: center; color:red;">
- 		<h3><font face="Verdana,Arial,Helvetica,sans-serif">
- 		 <noscript>
-    	You must enable javascript or the website won't work
-    	</noscript>
-  		</font></h3>
-	</div>
-	<?php 
-	/*In this case I'm gonna show user reservations in any case, so
-	 *there's only an additional message in case we reach the page from a redirection 
-	 *as a result of a rem/del reservation action*/
-	if(isset($_REQUEST["result"]) && $_REQUEST["result"] == 1){
-		/*add/rem ok*/
-		echo "<div style=\"display: table; margin: 0 auto; text-align: center; padding-top: 10px;\">";
-		echo "<h2 style=\"text-align: center;\">Operation correctly executed</h2><br>";
-		echo "</div>";
-		
-	} else if (isset($_REQUEST["result"]) && $_REQUEST["result"] == 0){
-		echo "<div style=\"display: table; margin: 0 auto; text-align: center; padding-top: 10px;\">";
-		echo "<h2 style=\"color: red; text-align: center;\">Requested operation failed<br>".$_SESSION["resFailure"];
-		echo "</h2>";
-		echo "</div>";
-	}
-	?>
-	<div style="display: table; margin: 0 auto; text-align: center;">
-	<div style="display: inline-block;">
-	<h2 style="text-align: center;">My reservations</h2>
-	<?php 
-		require 'manageDB.php';
-		loadUserReservations($_SESSION["username"]);
-	?>
-	</div>
-	<div class="panel" id ="addpanel">
-	<form id="my_form" action="newRES.php" method="post">
-		<table>
-		<tr>
-			<td>Starting Time</td>
-			<td><input type="text" id="startH" name ="startH" style= "text-align: right" placeholder="HH" maxlength="2" > : </td>
-			<td><input type="text" id="startM" name ="startM" style= "text-align: right" placeholder="MM" maxlength="2"></td>
-		</tr>
-		<tr>
-			<td>Ending Time</td>
-			<td><input type="text" id="endH" name ="endH" style= "text-align: right" placeholder="HH" maxlength="2"> : </td>
-			<td><input type="text" id="endM" name ="endM" style= "text-align: right" placeholder="MM" maxlength="2"></td>
-		</tr>
-		</table>
-		<input type="button" id="confirm" value="Confirm" style="margin: 5px;" onclick="checkform()" >
-		<input type="button" class="cancel" value="Cancel" style="margin: 5px;">
-	</form>
-	</div>
-	<div class="panel" id ="removepanel">
-	<form id="my_remform" action="delRES.php" method="post">
-		<table>
-		<tr>
-			<td>Machine</td>
-			<td><input type="text" id="machine" name ="machine" style= "text-align: right" placeholder="machine ID"></td>
-		</tr>
-		<tr>
-			<td>Starting Time</td>
-			<td><input type="text" id="startH_r" name ="startH" style= "text-align: right" placeholder="HH" maxlength="2"> : </td>
-			<td><input type="text" id="startM_r" name ="startM" style= "text-align: right" placeholder="MM" maxlength="2"></td>
-		</tr>
-		</table>
-		<input type="button" id="confirm" value="Confirm" style="margin: 5px;" onclick="checkRemform()" >
-		<input type="button" class="cancel" value="Cancel" style="margin: 5px;">
-	</form>
-	</div>
-	<div class="buttonsPanel">
-		<input type="button" id="add" value="Add Reservation" style="margin: 5px;">
-		<input type="button" id="remove" value="Remove Reservation" style="margin: 5px;">
-	</div>
-	</div>
-	<div style="display: table; margin: 0 auto;">
-	<h2 style="text-align: center;">Reservations</h2>
-	<?php 
-		loadDB();
-	?>
-	</div>
+        
+    </div>
 </div>
+
 </body>
 </html>

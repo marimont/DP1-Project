@@ -18,7 +18,11 @@
 		$startM = htmlentities($_POST["startM"]);
 		$endH = htmlentities($_POST["endH"]);
 		$endM = htmlentities($_POST["endM"]);
-		} else die("<h1>Access forbidden</h1>");
+		} else {
+			$_SESSION["resFailure"] = "Wrong input values: not numeric";
+			header("Location:reservations.php?result=0");
+			exit();
+		}
 	} else die("<h1>Access forbidden</h1>");
 	
 	if(!is_numeric($startH) || !is_numeric($startM)

@@ -1,57 +1,62 @@
 <?php
 	require 'checkStatusAndSession.php';
 ?>
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<link href="mystyle.css" rel=stylesheet type="text/css">
+<meta charset="utf-8">
 <title>Homepage</title>
+<link rel="stylesheet" href="css/layouts/pure-mini.css">  
+<link rel="stylesheet" href="css/layouts/side-menu.css">  
 </head>
 <body>
-<div id="header">
-	<h1>Homepage</h1>
-</div>
-<div id="nav">
-	<?php 
-		if($isLogged)
-			echo "<div style=\"display: table; margin: 10px auto; align-text: center;\"><b>".$_SESSION["name"]." ".$_SESSION["surname"]."</b></div>";
-	?>
-	<ul>
-	<li><a href="reservations.php">Manage Reservations</a></li>
-	<li><a href="registration.php">Registration</a></li>
-	<?php 
-		if($isLogged){
-			echo "<li><a href=\"logout.php\">Logout</a></li>";
-		} else {
-			echo "<li><a href=\"login.php\">Login</a></li>";
-		}
-	?>
-	</ul>
-</div>
-<div id="section">
-<!-- Google Chrome bug: some Google Chrome versions are affected by a bug: when disabling JavaScript
-	you have to refresh the page twice in order to be able to see correctly <noscript> element content 
-	(reference: https://bugs.chromium.org/p/chromium/issues/detail?id=232410) 
-	
-	For this reason I encapsulated <noscript> tag within other tags: seeing  html tags at first reloas is quite annoying!-->
-	
-	<div style="text-align: center; color:red;">
- 		<h3><font face="Verdana,Arial,Helvetica,sans-serif">
- 		 <noscript>
-    	You must enable javascript or the website won't work
-    	</noscript>
-  		</font></h3>
-	</div>
-		
 
-	<div style="display: table; margin: 0 auto;">
-	<h2 style="text-align: center;">Reservations</h2>
-	<?php 
-		require 'manageDB.php';
-		loadDB();
-	?>
-	</div>
+<div id="layout">
+
+    <div id="menu">
+        <div class="pure-menu">
+        <p class="pure-menu-heading"><br></p>
+         	 <?php 
+				if($isLogged)
+				echo "<div style=\"display: table; margin: 10px auto; align-text: center;\"><b>".$_SESSION["name"]." ".$_SESSION["surname"]."</b></div>";
+			?>
+			<ul class="pure-menu-list">
+				<li class="pure-menu-item"><a href="reservations.php" class="pure-menu-link">Manage Reservations</a></li>
+				<li class="pure-menu-item"><a href="registration.php" class="pure-menu-link">Registration</a></li>
+			<?php 
+				if($isLogged){
+					echo "<li class=\"pure-menu-item\"><a href=\"logout.php\" class=\"pure-menu-link\">Logout</a></li>";
+				} else {
+					echo "<li class=\"pure-menu-item\"><a href=\"login.php\" class=\"pure-menu-link\">Login</a></li>";
+				}
+			?>
+			</ul>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="header">
+            <h1>Homepage</h1>
+        </div>
+
+        <div class="content" style="display: table; margin: 0 auto">
+        	
+ 				<h3 class="error">
+ 			 	<noscript>
+    			You should enable javascript or the website may not work properly
+    			</noscript>
+  				</h3>
+			
+            <h2 class="content-subhead">Reservations</h2>
+            <p>
+               <?php 
+				require 'manageDB.php';
+				loadDB();
+				?>
+            </p>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>
