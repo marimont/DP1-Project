@@ -80,7 +80,7 @@
   		</font></h3>
 	</div>
 	<?php 
-		if(!isset($_REQUEST["result"]) || isset($_REQUEST["result"]) && !$isLogged){
+		if(!isset($_REQUEST["result"]) || isset($_REQUEST["result"]) && $_REQUEST["result"] == 1 && !$isLogged){
 			/*I need to check both conditions (result and isLogged) because I could have
 			 * been performed a successful login and being inactive on the login success page.
 			 * If I reaload the page after two minutes, result is still set to 1 but I don't want to
