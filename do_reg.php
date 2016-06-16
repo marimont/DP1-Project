@@ -2,14 +2,14 @@
 	require 'checkStatusAndSession.php';
 	require 'configDB.php';
 	
-	if(isset($_REQUEST["name"]) && isset($_REQUEST["surname"]) 
-			&& isset($_REQUEST["email"]) && isset($_REQUEST["password"]) && isset($_REQUEST["check_password"])){
-		if($_REQUEST["name"]!= "" && $_REQUEST["surname"] != ""
-			&& $_REQUEST["email"] != "" && $_REQUEST["password"] != "" && $_REQUEST["check_password"] != ""){
-			$name = htmlentities($_REQUEST["name"]);
-			$surname = htmlentities($_REQUEST["surname"]);
-			$email = htmlentities($_REQUEST["email"]);
-			$pwd = $_REQUEST["password"];
+	if(isset($_POST["name"]) && isset($_POST["surname"]) 
+			&& isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["check_password"])){
+		if($_POST["name"]!= "" && $_POST["surname"] != ""
+			&& $_POST["email"] != "" && $_POST["password"] != "" && $_POST["check_password"] != ""){
+			$name = htmlentities($_POST["name"]);
+			$surname = htmlentities($_POST["surname"]);
+			$email = htmlentities($_POST["email"]);
+			$pwd = $_POST["password"];
 		/*I'm not sanitizing pwds in order to avoid weakening them
 		 * Thet're gonna be processed by a hash function, so they won't be offensive
 		 * */

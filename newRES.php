@@ -10,14 +10,14 @@
 		exit;
 	}
 	
-	if(isset($_REQUEST["startH"]) && isset($_REQUEST["startM"]) 
-			&& isset($_REQUEST["endH"]) && isset($_REQUEST["endM"])){
-		if($_REQUEST["startH"] != "" && $_REQUEST["startM"] != ""
-				&& $_REQUEST["endH"] != "" && $_REQUEST["endM"] != ""){
-		$startH = htmlentities($_REQUEST["startH"]);
-		$startM = htmlentities($_REQUEST["startM"]);
-		$endH = htmlentities($_REQUEST["endH"]);
-		$endM = htmlentities($_REQUEST["endM"]);
+	if(isset($_POST["startH"]) && isset($_POST["startM"]) 
+			&& isset($_POST["endH"]) && isset($_POST["endM"])){
+		if($_POST["startH"] != "" && $_POST["startM"] != ""
+				&& $_POST["endH"] != "" && $_POST["endM"] != ""){
+		$startH = htmlentities($_POST["startH"]);
+		$startM = htmlentities($_POST["startM"]);
+		$endH = htmlentities($_POST["endH"]);
+		$endM = htmlentities($_POST["endM"]);
 		} else die("<h1>Access forbidden</h1>");
 	} else die("<h1>Access forbidden</h1>");
 	

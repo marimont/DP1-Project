@@ -10,10 +10,10 @@
 	}
 	
 	
-	if(isset($_REQUEST["startH"]) && isset($_REQUEST["startM"]) 
-			&& isset($_REQUEST["machine"])){
-		if($_REQUEST["startH"] != "" && $_REQUEST["startM"] != ""
-				&& $_REQUEST["machine"] != ""){
+	if(isset($_POST["startH"]) && isset($_POST["startM"]) 
+			&& isset($_POST["machine"])){
+		if($_POST["startH"] != "" && $_POST["startM"] != ""
+				&& $_POST["machine"] != ""){
 			$startH = htmlentities($_REQUEST["startH"]);
 			$startM = htmlentities($_REQUEST["startM"]);
 			$machineID = htmlentities($_REQUEST["machine"]);

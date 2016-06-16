@@ -8,10 +8,10 @@
 	 * the login page sent its form here to perform login, so he is logged out!
 	 */
 	
-	if(isset($_REQUEST["username"]) && isset($_REQUEST["password"])){
-		if($_REQUEST["username"] !="" || $_REQUEST["password"] != ""){
-		$username = htmlentities($_REQUEST["username"]);
-		$pwd = $_REQUEST["password"];
+	if(isset($_POST["username"]) && isset($_POST["password"])){
+		if($_POST["username"] !="" || $_POST["password"] != ""){
+		$username = htmlentities($_POST["username"]);
+		$pwd = $_POST["password"];
 		/*I'm not sanitizing pwds in order to avoid weakening them
 		 * Thet're gonna be processed by a hash function, so they won't be offensive
 		 * */
