@@ -10,7 +10,7 @@
 	}
 	
 	/*in this way I'm sure I arrived here from a form*/
-	if(!isset($_REQUEST["resID"]) || $_REQUEST["resID"] == ""){
+	if(!isset($_POST["resID"]) || $_POST["resID"] == ""){
 		$_SESSION["resFailure"] = "access forbidden";
 		header("Location:reservations.php?result=0");
 		exit();
@@ -18,7 +18,12 @@
 	
 	/*I sanitize input as I would do for any other input field
 	 * to a avoid a malicious usage  of the hidden field*/
-	$reservationID = htmlentities($_REQUEST["resID"]);
+	$reservationID = htmlentities($_POST["resID"]);
+	if(!is_numeric($reservationID)){
+		$_SESSION["resFailure"] = "access forbidden";
+		header("Location:reservations.php?result=0");
+		exit();
+	}
 	
 	//mysqli_report(MYSQLI_REPORT_ERROR);
 	if($link = my_connect()){
@@ -38,7 +43,7 @@
 			mysqli_free_result($res);
 		
 			$reservationID = mysqli_real_escape_string($link, $reservationID);
-			$query = "SELECT TimeStamp from reservations WHERE ID = '$reservationID' AND IDU = '$idu'";
+			$query = "SELECT TimeStamp from reservations WHERE ID = $reservationID AND IDU = $idu";
 			$res = mysqli_query($link, $query);
 			if(!$res)
 				throw new Exception("Query failed");
@@ -53,7 +58,7 @@
 			
 			if(($current_time - $timestamp) < 60)
 				throw new Exception("at least 1 minute from the reservation insertion
-				must be elapsed!");
+				must be elapsed");
 		
 			$query = "DELETE FROM reservations WHERE ID = $reservationID";
 			$res = mysqli_query($link, $query);

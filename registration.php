@@ -106,7 +106,7 @@
 				echo "<form id=my_form class=\"pure-form pure-form-aligned\" action=\"do_reg.php\" method=\"post\" onsubmit=\"return checkform()\">";
 				echo "<div class=\"pure-control-group\"> <label for=\"name\">Name</label>";
 				echo "<input type=\"text\" id=\"name\" name=\"name\" maxlength=\"50\" placeholder=\"Name\" required></div>";
-				echo "<div class=\"pure-control-group\"> <label for=\"suname\">Surame</label>";
+				echo "<div class=\"pure-control-group\"> <label for=\"surname\">Surname</label>";
 				echo "<input type=\"text\" id=\"surname\" name=\"surname\" maxlength=\"50\" placeholder=\"Surname\" required></div>";
 				echo "<div class=\"pure-control-group\"> <label for=\"eame\">Email</label>";
 				echo "<input type=\"text\" id=\"email\" name=\"email\" maxlength=\"50\" placeholder=\"Email\" required></div>";
@@ -131,7 +131,7 @@
 				echo "<form id=my_form class=\"pure-form pure-form-aligned\" action=\"do_reg.php\" method=\"post\" onsubmit=\"return checkform()\">";
 				echo "<div class=\"pure-control-group\"> <label for=\"name\">Name</label>";
 				echo "<input type=\"text\" id=\"name\" name=\"name\" maxlength=\"50\" placeholder=\"Name\" required></div>";
-				echo "<div class=\"pure-control-group\"> <label for=\"suname\">Surame</label>";
+				echo "<div class=\"pure-control-group\"> <label for=\"surname\">Surname</label>";
 				echo "<input type=\"text\" id=\"surname\" name=\"surname\" maxlength=\"50\" placeholder=\"Surname\" required></div>";
 				echo "<div class=\"pure-control-group\"> <label for=\"eame\">Email</label>";
 				echo "<input type=\"text\" id=\"email\" name=\"email\" maxlength=\"50\" placeholder=\"Email\" required></div>";

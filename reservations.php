@@ -107,9 +107,7 @@
 		<h2 class="content-subhead">My reservations</h2>
 		<?php 
 			require 'manageDB.php';
-			echo "<form action=\"delRES.php\" method=\"post\">";
 			loadUserReservations($_SESSION["username"]);
-			echo "</form>"
 		?>
 			<form id="my_form" class="pure-form pure-form-aligned" action="newRES.php" method="post" onsubmit="return checkform()">
 			<fieldset>

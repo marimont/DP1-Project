@@ -10,6 +10,7 @@
 			$surname = htmlentities($_POST["surname"]);
 			$email = htmlentities($_POST["email"]);
 			$pwd = $_POST["password"];
+			$pwd2 = $_POST["check_password"];
 		/*I'm not sanitizing pwds in order to avoid weakening them
 		 * Thet're gonna be processed by a hash function, so they won't be offensive
 		 * */
@@ -39,6 +40,12 @@
 	
 	if(strlen($pwd) > 50){
 		$_SESSION["regFailure"] = "password maximum length is of 50 characters";
+		header("Location:registration.php?result=0.php");
+		exit();
+	}
+	
+	if($pwd != $pwd2){
+		$_SESSION["regFailure"] = "passwords not matching";
 		header("Location:registration.php?result=0.php");
 		exit();
 	}

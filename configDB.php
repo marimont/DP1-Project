@@ -1,6 +1,6 @@
 <?php
 
-$config = 0;	//0 for localhost and 1 for the other db
+$config = 1;	//0 for localhost and 1 for the other db
 $N = 4;
 
 function my_connect(){

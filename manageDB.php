@@ -6,26 +6,27 @@ function loadDB(){
 		if($link = my_connect()){
 		//mysqli_report(MYSQLI_REPORT_ERROR);
 			checkDB($link);
-			$query = "SELECT U.Name, U.Surname, M.Name, M.ID, R.StartTime, R.EndTime 
+			$query = "SELECT U.Name, U.Surname, M.Name, M.ID, R.StartTime, R.EndTime, R.ID
 					FROM reservations AS R, users AS U, machines AS M
 					WHERE R.IDU = U.ID AND R.IDM = M.ID
 					ORDER BY R.IDU, R.StartTime";
 			if($res = mysqli_query($link, $query)){
 				if(mysqli_num_rows($res) > 0){
 					echo "<table class=\"pure-table\">";
-					echo "<thead><tr><th>User</th><th>Machine</th><th>StartTime</th><th>Duration(min)</th></tr></thead>";
+					echo "<thead><tr><th>#</th><th>User</th><th>Machine</th><th>StartTime</th><th>Duration(min)</th></tr></thead>";
 					while ($row = mysqli_fetch_array($res)){
 						$name = $row[0];
 						$surname = $row[1];
 						$machine = $row[2];
 						$machineID = $row[3];
 						$duration = $row[5] - $row[4];
+						$resID = $row[6];
 						$startTimeH = intval($row[4]/60);
 						$startTimeHstr = sprintf("%02d", $startTimeH);
 						$startTimeM = $row[4]%60;
 						$startTimeMstr = sprintf("%02d", $startTimeM);
 						echo "<tr>";
-						echo "<td>$name $surname</td><td>$machine (ID = $machineID)</td><td>$startTimeHstr:$startTimeMstr</td><td>$duration</td>";
+						echo "<td>$resID</td><td>$name $surname</td><td>$machine</td><td>$startTimeHstr:$startTimeMstr</td><td>$duration</td>";
 						echo "</tr>";
 					}
 					echo "</table>";
@@ -51,7 +52,7 @@ function loadUserReservations($username){
 			if($res = mysqli_query($link, $query)){
 					if(mysqli_num_rows($res) > 0){
 					echo "<table class=\"pure-table\" style=\"margin:20px;\">";
-					echo "<thead><tr><th>Machine</th><th>StartTime</th><th>Duration(min)</th><th></th></tr></thead>";
+					echo "<thead><tr><th>#</th><th>Machine</th><th>StartTime</th><th>Duration(min)</th><th></th></tr></thead>";
 					while ($row = mysqli_fetch_array($res)){
 						$machine = $row[0];
 						$machineID = $row[1];
@@ -62,9 +63,9 @@ function loadUserReservations($username){
 						$startTimeM = $row[2]%60;
 						$startTimeMstr = sprintf("%02d", $startTimeM);
 						echo "<tr>";
-						echo "<td>$machine (ID = $machineID)</td><td>$startTimeHstr:$startTimeMstr</td><td>$duration</td>
-						<td><input type=\"submit\" name=\"remove\" class=\"pure-button pure-button-primary\" value=\"Remove\" style=\"margin: 5px;\">
-						<input type=\"hidden\" name=\"resID\" value=\"$reservationID\">
+						echo "<td>$reservationID</td><td>$machine</td><td>$startTimeHstr:$startTimeMstr</td><td>$duration</td>
+						<td><form action=\"delRES.php\" method=\"post\"><input type=\"submit\" name=\"remove\" class=\"pure-button pure-button-primary\" value=\"Remove\" style=\"margin: 5px;\">
+						<input type=\"hidden\" name=\"resID\" value=\"$reservationID\"></form>
 						</td>";
 						echo "</tr>";
 					}
