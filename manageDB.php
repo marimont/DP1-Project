@@ -63,7 +63,9 @@ function loadUserReservations($username){
 						$startTimeMstr = sprintf("%02d", $startTimeM);
 						echo "<tr>";
 						echo "<td>$machine (ID = $machineID)</td><td>$startTimeHstr:$startTimeMstr</td><td>$duration</td>
-						<td><input type=\"submit\" name=\"$reservationID\" class=\"pure-button pure-button-primary\" value=\"Remove\" style=\"margin: 5px;\"></td>";
+						<td><input type=\"submit\" name=\"remove\" class=\"pure-button pure-button-primary\" value=\"Remove\" style=\"margin: 5px;\">
+						<input type=\"hidden\" name=\"resID\" value=\"$reservationID\">
+						</td>";
 						echo "</tr>";
 					}
 					echo "</table>";
