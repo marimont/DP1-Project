@@ -1,4 +1,4 @@
-# DP1_project
+# DP1 Project
 
 This is a website I've developed as a project for the final exam of the course of Distributed Programming I. 
 
